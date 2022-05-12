@@ -1,0 +1,39 @@
+---
+# tasks file for ajit.apache
+  - name: Install apache on redhat 
+    yum:
+      name: "{{apache_packahe_rhel}}"
+      state: present 
+    when: ansible_os_family == "Redhat"
+  - name: Install apache on Debian 
+    apt: 
+      name: "{{apache_package_deb}}"
+      state: present
+    when: ansible_os_family == "Debian" 
+  - name: Set service name for rhel 
+    set_fact: 
+      package_name: "{{apache_package_rhel}}"
+    when: ansible_os_family == "RedHat"
+  - name: Set service name for Debian
+    set_fact:
+      package_name: "{{apache_package_deb}}"
+    when: ansible_os_family == "Debian"
+  - name: Start and enable apache service 
+    service: 
+      name: "{{package_name}}"
+      enabled: yes 
+      state: started
+  - name: Copy apache home page rhel 
+    template: 
+      src: /root/playbook/handlers/roles/index.html.j2
+      dest: "{{apache_homepage_rhel}}" 
+    notify:
+    - restart rhel  
+    when: ansible_os_family == "RedHat"
+  - name: Copy apache home page for Debian 
+    template:
+      src: /root/playbook/handlers/roles/index.html.j2
+      dest: "{{apache_homepage_deb}}"
+    notify:
+    - restart debian
+

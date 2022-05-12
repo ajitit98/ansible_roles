@@ -1,0 +1,10 @@
+---
+# handlers file for ajit.apache
+  - name: restart rhel 
+    service:
+      name: "{apache_package_rhel}}"
+      state: restarted
+  - name: restart debian
+    service: 
+      name: "{{apache_package_deb}}"
+      state: restarted

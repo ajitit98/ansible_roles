@@ -1,0 +1,6 @@
+---
+# vars file for ajit.apache
+apache_package_rhel: httpd
+apache_package_deb: apache2
+apache_homepage_rhel: /var/www/html/index.html 
+apache_homepage_deb: /var/www/html/index.html
